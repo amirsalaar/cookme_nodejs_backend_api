@@ -1,4 +1,5 @@
 module.exports = {
   verbose: true,
-  modulePathIgnorePatterns: ['dist'],
+  modulePathIgnorePatterns: ["dist"],
+  setupFilesAfterEnv: ["./jestSetup.ts"],
 };
