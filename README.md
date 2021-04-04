@@ -8,3 +8,10 @@
 4. `format`: prettify
 5. `test`: run all tests
 6. `start`: run prod mode
+
+## Database Setups
+
+```bash
+createdb -U postgres cookme_dev
+createdb -U postgres cookme_test
+```

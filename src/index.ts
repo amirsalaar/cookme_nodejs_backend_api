@@ -1,1 +1,1 @@
-console.log("Hello CookMes");
+import "./settings/globalSettings";
