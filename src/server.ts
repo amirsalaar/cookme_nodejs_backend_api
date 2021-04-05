@@ -1,8 +1,14 @@
 import express from "express";
 import { Server } from "node:http";
+import pool from "./db/dbPool";
 
 function run(): Server {
   const app = express();
+
+  pool.connect((err) => {
+    if (err) console.log("Error connecting to DB", err);
+    else console.log("Connected to DB");
+  });
 
   app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
