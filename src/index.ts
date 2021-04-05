@@ -1,4 +1,4 @@
 import "./settings/globalSettings";
-import app from "./server";
+import app from "./app";
 
 app.run();
