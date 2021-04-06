@@ -11,6 +11,7 @@
     "lint:fix": "npm run lint --fix",
     "format": "prettier --write --loglevel silent './**/*.{json,js}'",
     "test": "NODE_ENV=test jest",
+    "test:watch": "NODE_ENV=test jest --watch",
     "test:coverage": "NODE_ENV=test jest --coverage",
     "start": "cross-env NODE_ENV=production node dist/index.js"
   },
