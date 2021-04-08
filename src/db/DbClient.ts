@@ -2,7 +2,7 @@
 import { QueryResult } from "pg";
 import pool from "./dbPool";
 
-export class DatabsePool {
+export default class DatabsePool {
   private static instance: DatabsePool;
 
   private constructor() {

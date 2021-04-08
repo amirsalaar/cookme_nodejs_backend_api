@@ -1,6 +1,9 @@
 import express from "express";
 import { Server } from "node:http";
-import { DatabsePool } from "./db/DbClient";
+import swaggerUi from "swagger-ui-express";
+import DatabsePool from "./db/DbClient";
+import routes from "./routes";
+import swaggerDoc from "./configs/swagger.json";
 
 function run(): Server {
   const app = express();
@@ -17,6 +20,10 @@ function run(): Server {
     res.header("Access-Control-Allow-Credentials", "true");
     next();
   });
+
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+
+  app.use("/api/v1", routes);
 
   return app.listen(process.env.PORT, () =>
     console.log(`Backend listening on port ${process.env.PORT}`),
