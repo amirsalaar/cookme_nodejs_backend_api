@@ -13,6 +13,10 @@
     "test": "NODE_ENV=test jest",
     "test:watch": "NODE_ENV=test jest --watch",
     "test:coverage": "NODE_ENV=test jest --coverage",
+    "db:migrate:up": "node ./node_modules/db-migrate/bin/db-migrate up -c 1 -m ./src/db/migrations",
+    "db:migrate:up_all": "node ./node_modules/db-migrate/bin/db-migrate up -m ./src/db/migrations",
+    "db:migrate:down": "node ./node_modules/db-migrate/bin/db-migrate down -c 1 -m ./src/db/migrations",
+    "db:migrate:down_all": "node ./node_modules/db-migrate/bin/db-migrate down -m ./src/db/migrations",
     "start": "cross-env NODE_ENV=production node dist/index.js"
   },
   "husky": {
@@ -57,10 +61,12 @@
   },
   "dependencies": {
     "cross-env": "^7.0.3",
+    "db-migrate": "^0.11.12",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "pg": "^8.5.1",
-    "swagger-ui-express": "^4.1.6"
+    "swagger-ui-express": "^4.1.6",
+    "ts-node": "^9.1.1"
   }
 }
