@@ -1,6 +1,7 @@
 import express from "express";
 import { Server } from "node:http";
 import swaggerUi from "swagger-ui-express";
+import morgan from "morgan";
 import DatabsePool from "./db/DbClient";
 import routes from "./routes";
 import swaggerDoc from "./configs/swagger.json";
@@ -9,6 +10,9 @@ function run(): Server {
   const app = express();
 
   const dbInstance = DatabsePool.getInstance();
+
+  const logger = morgan("tiny");
+  app.use(logger);
 
   app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
