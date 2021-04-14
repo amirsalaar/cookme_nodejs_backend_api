@@ -1,15 +1,27 @@
 import { NextFunction, Request, Response } from "express";
+import UserService from "../services/UserService";
 
 export class UsersController {
+  private service: UserService;
+
+  constructor() {
+    this.service = new UserService();
+  }
   /**
-   * createUser
+   * getUsers
    */
-  public static async createUser(
+  public getUsers = async (
     req: Request,
     res: Response,
     next: NextFunction,
-  ): Promise<void> {
-    res.json("Signs Up User");
-    next();
-  }
+  ): Promise<void> => {
+    try {
+      const result = this.service.getUsers();
+
+      res.json(result);
+      next();
+    } catch (error) {
+      res.json({ error: error.message });
+    }
+  };
 }

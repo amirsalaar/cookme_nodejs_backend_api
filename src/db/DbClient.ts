@@ -7,8 +7,12 @@ export default class DatabsePool {
 
   private constructor() {
     pool.connect((err) => {
-      if (err) console.log("Error connecting to DB", err);
-      else console.log("Connected to DB");
+      try {
+        if (err) throw err;
+        else console.log("Connected to DB");
+      } catch (err) {
+        console.log(err.message);
+      }
     });
   }
 
@@ -19,9 +23,16 @@ export default class DatabsePool {
     return DatabsePool.instance;
   }
 
-  public static query(text: string, values: any[]): Promise<QueryResult<any>> {
+  public static async query(
+    text: string,
+    values?: any[],
+  ): Promise<QueryResult<any>> {
     console.log("query:", text, values);
 
-    return pool.query(text, values);
+    try {
+      return await pool.query(text, values);
+    } catch (error) {
+      throw error;
+    }
   }
 }
