@@ -1,7 +1,11 @@
 import dotenv from "dotenv";
 import path from "path";
 
-const baseDir = ["development", "test"].includes(process.env.NODE_ENV!)
+/**
+ * production and development are running from ./dist/index.js --> we want to target the .env.* file in the root directory
+ * tests are running from the root
+ */
+const baseDir = ["development", "production"].includes(process.env.NODE_ENV!)
   ? path.join(__dirname, "../../../.env.")
   : path.join(__dirname, "../../.env.");
 
