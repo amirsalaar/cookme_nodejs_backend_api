@@ -23,15 +23,15 @@ console.log(
   `Will connect to postgres://${process.env.POSTGRES_USER}@${process.env.POSTGRES_HOST}/${process.env.POSTGRES_DB}`,
 );
 
-instance
-  .raw("select 1")
-  .then(() => {
+(async () => {
+  try {
+    await instance.raw("select 1");
     console.log("Successfully connected to database");
-  })
-  .catch((err) => {
-    console.log(`Failed to connect to database: ${err}`);
+  } catch (error) {
+    console.log(`Failed to connect to database: ${error}`);
     process.exit(1);
-  });
+  }
+})();
 
 export const db = async (): Promise<Knex<any, unknown[]>> => instance;
 
