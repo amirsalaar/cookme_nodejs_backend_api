@@ -23,5 +23,10 @@
     "baseUrl": "."
   },
   "exclude": ["node_modules", "./**/*__tests__", "./**/*migrations"],
-  "include": ["./src/**/*.tsx", "./src/**/*.ts", "jestSetup.ts"]
+  "include": [
+    "./src/**/*.tsx",
+    "./src/**/*.ts",
+    "jestSetup.ts",
+    "dotenvConfig.ts"
+  ]
 }
