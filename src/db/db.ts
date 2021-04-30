@@ -1,3 +1,4 @@
+import "../../dotenvConfig";
 import knex, { Knex } from "knex";
 
 export const config: Knex.Config = {
@@ -12,6 +13,7 @@ export const config: Knex.Config = {
   migrations: {
     // This is missing from the TypeScript types currently.
     stub: "migration.stub",
+    directory: "./src/db/migrations",
   },
 };
 
