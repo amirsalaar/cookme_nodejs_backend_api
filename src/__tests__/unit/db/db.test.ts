@@ -4,7 +4,7 @@ describe("db", () => {
   it("should connect to db", async () => {
     const dbInstance = await getDbInstance();
     const res = await dbInstance.raw("select 1");
-    dbInstance.destroy();
+    await dbInstance.destroy();
     expect(res).toBeDefined();
   });
 });

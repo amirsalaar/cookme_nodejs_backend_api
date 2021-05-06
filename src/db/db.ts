@@ -28,7 +28,7 @@ export const mainConfig: Knex.Config = {
   },
 };
 
-export const dbClient: Knex = knex(masterConfig);
+const dbClient: Knex = knex(masterConfig);
 const mainInstance: Knex = knex(mainConfig);
 
 console.log(
@@ -48,5 +48,3 @@ export const getDbInstance = async (): Promise<Knex<any, unknown[]>> => {
     process.exit(1);
   }
 };
-
-export const timestamp = (): string => new Date().toUTCString();

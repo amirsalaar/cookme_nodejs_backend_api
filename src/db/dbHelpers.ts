@@ -1,13 +1,25 @@
-import { dbClient } from "./db";
+import { Knex } from "knex";
+import { getDbInstance } from "./db";
 
-export const resetDatabase = async (): Promise<void> => {
+export const setupTestDatabase = async (): Promise<Knex<any, unknown[]>> => {
+  const dbInstance = await getDbInstance();
   try {
-    await dbClient.raw(
-      `DROP DATABASE IF EXISTS ${process.env.POSTGRES_DB_NAME}`,
-    );
-    await dbClient.raw(`CREATE DATABASE ${process.env.POSTGRES_DB_NAME}`);
-    await dbClient.destroy();
+    await dbInstance.migrate.rollback();
+    await dbInstance.migrate.latest();
+    return dbInstance;
   } catch (error) {
-    console.log(`Failed to reset database ${error}`);
+    console.log(error);
+    process.exit(1);
+  }
+};
+
+export const resetTestDatabase = async (): Promise<void> => {
+  const dbInstance = await getDbInstance();
+  try {
+    await dbInstance.migrate.rollback();
+    await dbInstance.destroy();
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
   }
 };
