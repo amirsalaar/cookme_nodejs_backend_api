@@ -2,7 +2,7 @@ import { Knex } from "knex";
 import { setupTestDatabase, resetTestDatabase } from "../../../db/dbHelpers";
 import { UserRepository } from "../../../models";
 
-describe("UserRepository.getUserbyId", () => {
+describe("UserRepository", () => {
   let dbInstance: Knex<any, unknown[]>;
   let userRepo: UserRepository;
 
@@ -68,6 +68,13 @@ describe("UserRepository.getUserbyId", () => {
     expect(parseInt(dbUserCountsBefore.rows[0]["count"]) + 1).toEqual(
       parseInt(dbUserCountsAfter.rows[0]["count"]),
     );
+  });
+
+  it("should return null if user not found", async () => {
+    const nullRecord = await userRepo.getUserById(1);
+    console.log(nullRecord);
+
+    expect(nullRecord).toBeNull();
   });
 
   async function getAllUsersCount() {

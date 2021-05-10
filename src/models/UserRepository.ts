@@ -18,7 +18,7 @@ export class UserRepository {
     try {
       const query = `SELECT * FROM "users" u WHERE u.id = ${id}`;
       const result = await (await this.dbInstancePromise).raw(query);
-      return result ? result.rows[0] : null;
+      return result.rowCount !== 0 ? result.rows[0] : null;
     } catch (error) {
       console.log(error);
       process.exit(1);
