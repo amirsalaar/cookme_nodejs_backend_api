@@ -1,16 +1,21 @@
 import { Knex } from "knex";
 import { setupTestDatabase, resetTestDatabase } from "../../../db/dbHelpers";
-import { getUserById } from "../../../models";
+import { UserRepository } from "../../../models";
 
-describe("getUserbyId", () => {
+describe("UserRepository.getUserbyId", () => {
   let dbInstance: Knex<any, unknown[]>;
+  let userRepo: UserRepository;
   beforeEach(async () => {
     dbInstance = await setupTestDatabase();
+    userRepo = new UserRepository();
   });
 
   afterEach(async () => {
     await resetTestDatabase();
   });
+
+  afterAll(async () => await dbInstance.destroy());
+
   it("should return a user", async () => {
     const data = {
       firstName: "Joe",
@@ -33,7 +38,7 @@ describe("getUserbyId", () => {
       'select * from "users" u where u.id = 1',
     );
 
-    const expected = await getUserById(1);
+    const expected = await userRepo.getUserById(1);
     expect(actual.rows[0]).toStrictEqual(expected);
   });
 });
