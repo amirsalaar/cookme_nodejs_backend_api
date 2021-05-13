@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import UserService from "../services/UserService";
+import { UserService } from "../services/UserService";
 
 export class UsersController {
   private service: UserService;
@@ -7,21 +7,28 @@ export class UsersController {
   constructor() {
     this.service = new UserService();
   }
+
   /**
-   * getUsers
+   * getUserById
+   * @param req {Request}
+   * @param res {Response}
+   * @param next {NextFunction}
    */
-  public getUsers = async (
+  public getUserById = async (
     req: Request,
     res: Response,
     next: NextFunction,
   ): Promise<void> => {
     try {
-      const result = this.service.getUsers();
+      const { id } = req.params;
+      const result = await this.service.getUserById(parseInt(id));
 
-      res.json(result);
+      if (result === null) res.status(404).send();
+      else res.status(200).json(result);
+
       next();
     } catch (error) {
-      res.json({ error: error.message });
+      res.status(500).json({ error: error.message });
     }
   };
 }

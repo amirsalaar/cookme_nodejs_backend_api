@@ -1,20 +1,33 @@
-import User from "../models/User";
+import { User } from "src/types/User";
+import { UserRepository } from "../models";
 
-export default class UserService {
-  private userModel: User;
+export class UserService {
+  private userRepo: UserRepository;
   constructor() {
-    this.userModel = new User();
+    this.userRepo = new UserRepository();
   }
 
+  // /**
+  //  * getUsers
+  //  */
+  // public async getUsers(): Promise<User[]> {
+  //   try {
+  //     const users = await this.userRepo.findAll();
+  //     return users.rows;
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
+
   /**
-   * getUsers
+   * getUserById
+   * @param id {number}
    */
-  public async getUsers(): Promise<User[]> {
+  public async getUserById(id: number): Promise<User> {
     try {
-      const users = await this.userModel.findAll();
-      return users.rows;
+      return await this.userRepo.getUserById(id);
     } catch (error) {
-      throw error;
+      throw new Error(error.message);
     }
   }
 }

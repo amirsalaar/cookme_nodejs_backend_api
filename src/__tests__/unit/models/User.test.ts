@@ -72,7 +72,6 @@ describe("UserRepository", () => {
 
   it("should return null if user not found", async () => {
     const nullRecord = await userRepo.getUserById(1);
-    console.log(nullRecord);
 
     expect(nullRecord).toBeNull();
   });

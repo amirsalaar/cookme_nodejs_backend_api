@@ -20,8 +20,9 @@ export class UserRepository {
       const result = await (await this.dbInstancePromise).raw(query);
       return result.rowCount !== 0 ? result.rows[0] : null;
     } catch (error) {
-      console.log(error);
-      process.exit(1);
+      throw new Error(
+        `Database thrown error when querying the user with id: ${id} -- ${error.message}`,
+      );
     }
   }
 }
