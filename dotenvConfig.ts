@@ -6,7 +6,7 @@ import path from "path";
  * tests are running from the root
  */
 const baseDir = ["development", "production"].includes(process.env.NODE_ENV!)
-  ? path.join(__dirname, ".env.")
+  ? path.join(__dirname, "..", ".env.")
   : path.join(__dirname, ".env.");
 
 dotenv.config({
