@@ -1,14 +1,16 @@
 import { Knex } from "knex";
 import { setupTestDatabase, resetTestDatabase } from "../../../db/dbHelpers";
-import { UserRepository } from "../../../models";
+import { UserService } from "../../../services";
+import { User } from "../../../models";
+import { IUser } from "../../../types/User";
 
-describe("UserRepository", () => {
+describe("UserService", () => {
   let dbInstance: Knex<any, unknown[]>;
-  let userRepo: UserRepository;
+  let userService: UserService;
 
   beforeEach(async () => {
     dbInstance = await setupTestDatabase();
-    userRepo = new UserRepository();
+    userService = new UserService();
   });
 
   afterEach(async () => {
@@ -18,18 +20,33 @@ describe("UserRepository", () => {
   afterAll(async () => await dbInstance.destroy());
 
   it("should return a user", async () => {
+    const fakeUser = new User();
+
     const data = {
       firstName: "Joe",
       lastName: "Biden",
       email: "joe@biden.com",
+      username: "joebiden",
+      passwordDigest: "123456",
       role: 1,
+      id: 1,
+      createdAt: null,
+      updatedAt: null,
+      phoneNumber: null,
+      address: null,
     };
+
+    Object.entries(fakeUser).forEach((entry) => {
+      fakeUser[entry[0]] = data[entry[0]];
+    });
 
     await dbInstance
       .insert({
         first_name: data.firstName,
         last_name: data.lastName,
         email: data.email,
+        username: data.username,
+        password_digest: data.passwordDigest,
         role: data.role,
       })
       .into("users")
@@ -39,8 +56,11 @@ describe("UserRepository", () => {
       'select * from "users" u where u.id = 1',
     );
 
-    const expected = await userRepo.getUserById(1);
-    expect(actual.rows[0]).toStrictEqual(expected);
+    const expected: IUser = await userService.getUserById(1);
+    expected.createdAt = null;
+    expected.updatedAt = null;
+
+    expect(fakeUser).toStrictEqual(expected);
   });
 
   it("database state should change after adding the user", async () => {
@@ -48,6 +68,8 @@ describe("UserRepository", () => {
       firstName: "Joe",
       lastName: "Biden",
       email: "joe@biden.com",
+      username: "joebiden",
+      passwordDigest: "123456",
       role: 1,
     };
 
@@ -58,6 +80,8 @@ describe("UserRepository", () => {
         first_name: data.firstName,
         last_name: data.lastName,
         email: data.email,
+        username: data.username,
+        password_digest: data.passwordDigest,
         role: data.role,
       })
       .into("users")
@@ -71,7 +95,7 @@ describe("UserRepository", () => {
   });
 
   it("should return null if user not found", async () => {
-    const nullRecord = await userRepo.getUserById(1);
+    const nullRecord = await userService.getUserById(1);
 
     expect(nullRecord).toBeNull();
   });

@@ -1,3 +1,3 @@
-import { db } from "./src/db";
+import { mainConfig } from "./src/db";
 
-module.exports = db.mainConfig;
+module.exports = mainConfig;

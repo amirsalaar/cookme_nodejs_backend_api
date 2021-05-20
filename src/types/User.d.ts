@@ -1,13 +1,15 @@
-export type User = IUser;
-
-interface IUser {
+export interface IUser {
+  id: number;
+  username: string;
   firstName: string;
   lastName: string;
   email: string;
   role: number;
-  password_digest: string;
+  passwordDigest: string;
   address: string | null;
-  phone_number: string | null;
-  created_at: Date;
-  updated_at: Date;
+  phoneNumber: string | null;
+  createdAt: Date | null;
+  updatedAt: Date | null;
+  checkIfUnencryptedPasswordIsValid: (unencryptedPassword: string) => boolean;
+  generateAuthToken: (user: IUser) => string;
 }

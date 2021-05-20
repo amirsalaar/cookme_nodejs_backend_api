@@ -1,10 +1,13 @@
-import { User } from "src/types/User";
-import { UserRepository } from "../models";
+import { IUser } from "src/types/User";
+import { User } from "../models";
+import { getDbInstance } from "../db/db";
+import { Knex } from "knex";
 
 export class UserService {
-  private userRepo: UserRepository;
+  private dbInstancePromise: Promise<Knex<any, unknown[]>>;
+
   constructor() {
-    this.userRepo = new UserRepository();
+    this.dbInstancePromise = getDbInstance();
   }
 
   // /**
@@ -23,11 +26,55 @@ export class UserService {
    * getUserById
    * @param id {number}
    */
-  public async getUserById(id: number): Promise<User> {
+  public async getUserById(id: number): Promise<IUser | null> {
     try {
-      return await this.userRepo.getUserById(id);
+      const query = `SELECT * FROM "users" u WHERE u.id = ${id}`;
+      const result = await (await this.dbInstancePromise).raw(query);
+
+      return result.rowCount !== 0
+        ? this.castDbResultOnUser(result.rows[0])
+        : null;
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(
+        `Database thrown error when querying the user with id: ${id} -- ${error.message}`,
+      );
     }
+  }
+
+  /**
+   * getUserByUsername
+   * @param username
+   */
+  public async getUserByUsername(username: string): Promise<User> {
+    try {
+      const query = `SELECT * FROM "users" u WHERE u.username = ${username}`;
+      const result = await (await this.dbInstancePromise).raw(query);
+      return result.rowCount !== 0 ? result.rows[0] : null;
+    } catch (error) {
+      throw new Error(
+        `Error thrown when querying user with username: ${username} -- ${error.message}`,
+      );
+    }
+  }
+
+  /**
+   * castDbResultOnUser
+   */
+  public castDbResultOnUser(dbResult: { [key in string]: any }): IUser {
+    const user = new User();
+
+    user.id = parseInt(dbResult.id);
+    user.username = dbResult.username;
+    user.firstName = dbResult.first_name;
+    user.lastName = dbResult.last_name;
+    user.email = dbResult.email;
+    user.passwordDigest = dbResult.password_digest;
+    user.address = dbResult.address;
+    user.role = dbResult.role;
+    user.phoneNumber = dbResult.phone_number;
+    user.updatedAt = dbResult.updated_at;
+    user.createdAt = dbResult.created_at;
+
+    return user;
   }
 }
