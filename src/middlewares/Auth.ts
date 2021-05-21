@@ -33,9 +33,9 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
     res.setHeader("token", newToken);
     next();
   } catch (error) {
-    res
-      .status(401)
-      .json({ error: "Authentication failed. Please try logging in." });
+    res.json({
+      error: `Authentication failed. Please try logging in. ${error.message}`,
+    });
   }
 };
 
