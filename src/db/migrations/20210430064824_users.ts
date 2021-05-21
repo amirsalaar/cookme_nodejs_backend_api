@@ -5,10 +5,11 @@ exports.up = (knex: Knex) =>
     table.bigIncrements("id").primary().notNullable;
     table.string("first_name");
     table.string("last_name");
-    table.string("email");
-    table.string("username").notNullable();
+    table.string("email").notNullable().unique();
+    table.string("username").notNullable().unique();
     table.string("password_digest").notNullable();
     table.text("address");
+    table.text("token");
     table.string("phone_number");
     table.integer("role");
     table.timestamps(true, true);
