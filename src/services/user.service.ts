@@ -1,26 +1,14 @@
-import { IUser } from "src/types/User";
+import { IUser } from "../types";
 import { User } from "../models";
 import { getDbInstance } from "../db/db";
 import { Knex } from "knex";
-
+import bcrypt from "bcrypt";
 export class UserService {
   private dbInstancePromise: Promise<Knex<any, unknown[]>>;
 
   constructor() {
     this.dbInstancePromise = getDbInstance();
   }
-
-  // /**
-  //  * getUsers
-  //  */
-  // public async getUsers(): Promise<User[]> {
-  //   try {
-  //     const users = await this.userRepo.findAll();
-  //     return users.rows;
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // }
 
   /**
    * getUserById
@@ -53,6 +41,32 @@ export class UserService {
     } catch (error) {
       throw new Error(
         `Error thrown when querying user with username: ${username} -- ${error.message}`,
+      );
+    }
+  }
+
+  /**
+   * createAUser
+   */
+  public async createAUser(aUser: IUser) {
+    try {
+      const { username, password, email, firstName, lastName } = aUser;
+      try {
+        const user = new User(username, password, email);
+      } catch (error) {
+        throw new Error(`User object creation failed - ${error.message}`);
+      }
+
+      const passwordDigest = bcrypt.hashSync(password, 16);
+
+      const query = `INSERT INTO "users"
+        ("username", "password", "email", "first_name", "last_name")
+        VALUES (${username},${passwordDigest},${email},${firstName},${lastName});`;
+
+      const result = await (await this.dbInstancePromise).raw(query);
+    } catch (error) {
+      throw new Error(
+        `Error thrown when inserting a new user - ${error.message}`,
       );
     }
   }
