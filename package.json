@@ -16,6 +16,7 @@
     "db:migrate": "NODE_ENV=development knex migrate:latest",
     "db:rollback": "NODE_ENV=development knex migrate:rollback",
     "db:createMigration": "NODE_ENV=development knex migrate:make",
+    "debug": "export DEBUG=app && npm run dev",
     "start": "cross-env NODE_ENV=production node dist/index.js"
   },
   "husky": {
@@ -35,13 +36,14 @@
     "@babel/preset-env": "^7.13.10",
     "@babel/preset-typescript": "^7.13.0",
     "@types/bcrypt": "^5.0.0",
+    "@types/cors": "^2.8.10",
     "@types/debug": "^4.1.5",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.11",
+    "@types/express-winston": "^4.0.0",
     "@types/jest": "^26.0.20",
     "@types/jsonwebtoken": "^8.5.1",
     "@types/knex": "^0.16.1",
-    "@types/morgan": "^1.9.2",
     "@types/node": "^14.14.33",
     "@types/pg": "^7.14.11",
     "@types/sinon": "^9.0.11",
@@ -69,18 +71,20 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "db-migrate": "^0.11.12",
     "db-migrate-pg": "^1.2.2",
     "debug": "^3.2.7",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-winston": "^4.1.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.4",
-    "morgan": "^1.10.0",
     "pg": "^8.5.1",
     "swagger-ui-express": "^4.1.6",
     "ts-node": "^9.1.1",
-    "validator": "^13.6.0"
+    "validator": "^13.6.0",
+    "winston": "^3.3.3"
   }
 }

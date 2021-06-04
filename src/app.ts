@@ -2,6 +2,8 @@ import express from "express";
 import { Server } from "node:http";
 import swaggerUi from "swagger-ui-express";
 import morgan from "morgan";
+import debug from "debug";
+import cors from "cors";
 import routes from "./routes";
 import swaggerDoc from "./configs/swagger.json";
 
@@ -25,6 +27,8 @@ function run(): Server {
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
   app.use("/api/v1", routes);
+
+  const debugLog: debug.IDebugger = debug("app");
 
   return app.listen(process.env.PORT, () =>
     console.log(`Backend listening on port ${process.env.PORT}`),
