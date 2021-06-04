@@ -2,9 +2,9 @@ import { Knex } from "knex";
 import { setupTestDatabase, resetTestDatabase } from "../../../db/dbHelpers";
 import { UserService } from "../../../services";
 import { User } from "../../../models";
-import { IUser } from "../../../types/User";
+import { IUser } from "../../../types";
 
-describe("UserService", () => {
+describe("UserService.getUserById", () => {
   let dbInstance: Knex<any, unknown[]>;
   let userService: UserService;
 

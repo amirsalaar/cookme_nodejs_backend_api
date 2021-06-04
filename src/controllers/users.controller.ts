@@ -24,9 +24,4 @@ export class UsersController {
       res.status(500).json({ error: error.message });
     }
   };
-
-  /**
-   * createAUser
-   */
-  public async register() {}
 }

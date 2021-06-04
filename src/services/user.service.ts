@@ -51,11 +51,10 @@ export class UserService {
   public async createAUser(aUser: IUser) {
     try {
       const { username, password, email, firstName, lastName } = aUser;
-      try {
-        const user = new User(username, password, email);
-      } catch (error) {
-        throw new Error(`User object creation failed - ${error.message}`);
-      }
+      if (!password || !email)
+        throw new Error("Email/Password cannot be empty!");
+
+      const user = new User(username, password, email);
 
       const passwordDigest = bcrypt.hashSync(password, 16);
 

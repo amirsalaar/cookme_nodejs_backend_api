@@ -3,8 +3,8 @@ import Sinon from "sinon";
 import request from "supertest";
 import { resetTestDatabase, setupTestDatabase } from "../../../db/dbHelpers";
 import app from "../../../app";
-import { UserService } from "../../../services/UserService";
-import auth from "../../../middlewares/Auth";
+import { UserService } from "../../../services/user.service";
+import auth from "../../../middlewares/auth.middleware";
 import jwt from "jsonwebtoken";
 
 describe("GET /api/v1/users/:id -- getUserById", () => {
@@ -23,7 +23,7 @@ describe("GET /api/v1/users/:id -- getUserById", () => {
   });
   afterAll(async () => await dbInstance.destroy());
   it("sends the correct response when a user with the id is found", async () => {
-    const fakeData = { id: "123", username: "abc", email: "abc@gmail.com" };
+    const fakeData = { id: 123, username: "abc", email: "abc@gmail.com" };
     const stub = Sinon.stub(UserService.prototype, "getUserById").resolves(
       fakeData,
     );
