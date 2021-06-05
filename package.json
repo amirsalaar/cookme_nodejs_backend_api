@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev:build": "tsc --skipLibCheck --watch",
-    "dev:run": "nodemon --quiet --watch dist --exec 'clear;node dist/src/index.js'",
+    "dev:run": "nodemon --quiet --watch dist --exec 'clear;node --unhandled-rejections=strict dist/src/index.js'",
     "dev": "NODE_ENV=development concurrently npm:dev:*",
     "lint": "eslint --ext .ts .",
     "lint:fix": "npm run lint --fix",

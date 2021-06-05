@@ -1,4 +1,4 @@
 import "../dotenvConfig";
-import app from "./app";
+import { appRunner } from "./app";
 
-app.run();
+appRunner();
