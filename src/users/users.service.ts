@@ -19,7 +19,7 @@ class UsersService implements CRUD {
     return UsersDao.patchUserById(id, resource);
   }
 
-  async readById(id: string) {
+  async getById(id: string) {
     return UsersDao.getUserById(id);
   }
 
