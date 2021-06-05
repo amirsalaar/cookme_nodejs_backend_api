@@ -1,6 +1,6 @@
 import { CRUD } from "src/common/interfaces/crud.interface";
-import UsersDao from "./daos/users.dao";
-import { CreateUserDto, PatchUserDto, PutUserDto } from "./dtos";
+import UsersDao from "../daos/users.dao";
+import { CreateUserDto, PatchUserDto, PutUserDto } from "../dtos";
 
 class UsersService implements CRUD {
   async create(resource: CreateUserDto) {

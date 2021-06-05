@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import debug from "debug";
 import bcrypt from "bcrypt";
-import usersService from "../users.service";
+import usersService from "../services/users.service";
 
 const log: debug.IDebugger = debug("app:users-controller");
 
