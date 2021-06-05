@@ -2,7 +2,7 @@ import { CRUD } from "src/common/interfaces/crud.interface";
 import UsersDao from "./daos/users.dao";
 import { CreateUserDto, PatchUserDto, PutUserDto } from "./dtos";
 
-export class UsersService implements CRUD {
+class UsersService implements CRUD {
   async create(resource: CreateUserDto) {
     return UsersDao.addUser(resource);
   }
@@ -31,3 +31,5 @@ export class UsersService implements CRUD {
     return UsersDao.getUserByEmail(email);
   }
 }
+
+export default new UsersService();
