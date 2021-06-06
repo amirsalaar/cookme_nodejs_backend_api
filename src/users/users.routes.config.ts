@@ -20,9 +20,10 @@ export class UsersRoutes extends CommonRoutesConfig {
 
     this.app.param("userId", usersMiddleware.extractUserId);
 
+    this.app.route("/users/:userId").all(usersMiddleware.validateUserExists);
+
     this.app
       .route("/users/:userId")
-      .all(usersMiddleware.validateUserExists)
       .get(usersController.getUserById)
       .delete(usersController.removeUser);
 
