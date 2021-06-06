@@ -15,6 +15,10 @@ class MongooseService {
     this.connectWithRetry();
   }
 
+  public get getMongoose() {
+    return mongoose;
+  }
+
   /**
    * mongoose.connect() attempts to connect to the local
    * MongoDB service (running with docker-compose) and will time out
