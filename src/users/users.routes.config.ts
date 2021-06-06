@@ -4,13 +4,13 @@ import usersController from "./controllers/users.controller";
 import usersMiddleware from "./middleware/users.middleware";
 
 export class UsersRoutes extends CommonRoutesConfig {
-  constructor(app: Application) {
-    super(app, "UsersRoutes");
+  constructor(app: Application, nameSpace: string | undefined = "/api/v2") {
+    super(app, "UsersRoutes", nameSpace);
   }
 
   public configureRoutes(): Application {
     this.app
-      .route("/users")
+      .route(this.getAbsolutePath("/users"))
       .get(usersController.listUsers)
       .post(
         usersMiddleware.validateRequiredUserBodyFields,
@@ -20,20 +20,22 @@ export class UsersRoutes extends CommonRoutesConfig {
 
     this.app.param("userId", usersMiddleware.extractUserId);
 
-    this.app.route("/users/:userId").all(usersMiddleware.validateUserExists);
+    this.app
+      .route(this.getAbsolutePath("/users/:userId"))
+      .all(usersMiddleware.validateUserExists);
 
     this.app
-      .route("/users/:userId")
+      .route(this.getAbsolutePath("/users/:userId"))
       .get(usersController.getUserById)
       .delete(usersController.removeUser);
 
-    this.app.put("/users/:userId", [
+    this.app.put(this.getAbsolutePath("/users/:userId"), [
       usersMiddleware.validateRequiredUserBodyFields,
       usersMiddleware.validateSameEmailBelongsToSameUser,
       usersController.put,
     ]);
 
-    this.app.patch("/users/:userId", [
+    this.app.patch(this.getAbsolutePath("/users/:userId"), [
       usersMiddleware.validatePatchEmail,
       usersController.patch,
     ]);
