@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import usersService from "../services/users.service";
 
 const log: debug.IDebugger = debug("app:users-controller");
+const SALT_ROUNDS = 10;
 
 class UsersController {
   async listUsers(req: Request, res: Response) {
@@ -18,7 +19,9 @@ class UsersController {
 
   async createUser(req: Request, res: Response) {
     let { password } = req.body;
-    password = await bcrypt.hash(password, 16);
+
+    const salt = await bcrypt.genSalt(SALT_ROUNDS);
+    password = await bcrypt.hash(password, salt);
 
     const userId = await usersService.create(req.body);
     res.status(201).send({ id: userId });

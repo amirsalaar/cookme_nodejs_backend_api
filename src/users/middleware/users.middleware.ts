@@ -16,7 +16,7 @@ class UsersMiddleware {
     res: Response,
     next: NextFunction,
   ) {
-    if (!req.body && !req.body.email && !req.body.password) {
+    if (req.body && !req.body.email && !req.body.password) {
       return res.status(400).send({
         error: "Missing required fields for email and password",
       });
