@@ -77,7 +77,10 @@ class UsersDao {
   }
 
   /**
-   * updateUserById
+   * PUT and PATCH request will be using the same method
+   * for updating the resource due to mongoose findOneAndUpdate()
+   * function being able to update the entire document or just part
+   * of it
    * @param {string} userId
    * @param {PatchUserDto | PutUserDto} userFields
    */
