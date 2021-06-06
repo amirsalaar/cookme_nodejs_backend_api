@@ -7,7 +7,7 @@ const log: debug.IDebugger = debug("app:users-controller");
 const SALT_ROUNDS = 10;
 
 class UsersController {
-  async listUsers(req: Request, res: Response) {
+  async listUsers(_req: Request, res: Response) {
     const users = await usersService.list(100, 0);
     res.status(200).send(users);
   }

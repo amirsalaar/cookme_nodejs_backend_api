@@ -1,5 +1,5 @@
 import { CommonRoutesConfig } from "../common/common.routes.config";
-import { Application, NextFunction, Request, Response } from "express";
+import { Application } from "express";
 import usersController from "./controllers/users.controller";
 import usersMiddleware from "./middleware/users.middleware";
 

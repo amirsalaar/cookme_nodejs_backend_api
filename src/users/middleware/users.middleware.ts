@@ -17,12 +17,12 @@ class UsersMiddleware {
     next: NextFunction,
   ) {
     if (req.body && !req.body.email && !req.body.password) {
-      return res.status(400).send({
+      res.status(400).send({
         error: "Missing required fields for email and password",
       });
+    } else {
+      next();
     }
-
-    next();
   }
 
   /**
@@ -38,10 +38,10 @@ class UsersMiddleware {
   ) {
     const user = await usersService.getUserByEmail(req.body.email);
     if (user) {
-      return res.status(400).send({ error: "User email already exists" });
+      res.status(400).send({ error: "User email already exists" });
+    } else {
+      next();
     }
-
-    next();
   }
 
   /**
@@ -57,10 +57,10 @@ class UsersMiddleware {
   ) {
     const user = await usersService.getUserByEmail(req.body.email);
     if (user && user.id === req.params.userId) {
-      return next();
+      next();
+    } else {
+      res.status(400).send({ error: "Invalid Email" });
     }
-
-    res.status(400).send({ error: "Invalid Email" });
   }
 
   /**
@@ -97,12 +97,10 @@ class UsersMiddleware {
   ) {
     const user = await usersService.getById(req.params.userId);
     if (!user) {
-      return res
-        .status(404)
-        .send({ error: `User id ${req.params.userId} not found` });
+      res.status(404).send({ error: `User id ${req.params.userId} not found` });
+    } else {
+      next();
     }
-
-    next();
   }
 
   /**
@@ -111,7 +109,7 @@ class UsersMiddleware {
    * @param res Response,
    * @param next NextFunction,
    */
-  public async extractUserId(req: Request, res: Response, next: NextFunction) {
+  public async extractUserId(req: Request, _res: Response, next: NextFunction) {
     req.body.id = req.params.userId;
     next();
   }
