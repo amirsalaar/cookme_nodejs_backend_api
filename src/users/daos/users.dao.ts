@@ -1,7 +1,7 @@
 import shortid from "shortid";
 import debug from "debug";
 import { CreateUserDto, PatchUserDto, PutUserDto } from "../dtos/";
-import mongooseService from "src/common/services/mongoose.service";
+import mongooseService from "../../common/services/mongoose.service";
 
 const log: debug.IDebugger = debug("app:in-memory-dao");
 
@@ -13,6 +13,7 @@ class UsersDao {
   /**
    * select: false in the @field password will hide this
    * field when returning a user or list of the users
+   * { id: false } deactivates id getter offered by mongoose
    */
   userSchema = new this.Schema(
     {
