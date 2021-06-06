@@ -7,6 +7,9 @@ const log: debug.IDebugger = debug("app:users-middleware");
 class UsersMiddleware {
   /**
    * validateREquiredUserBodyFields
+   * @param req Request,
+   * @param res Response,
+   * @param next NextFunction,
    */
   public async validateRequiredUserBodyFields(
     req: Request,
@@ -24,6 +27,9 @@ class UsersMiddleware {
 
   /**
    * validateSameEmailDoesntExist
+   * @param req Request,
+   * @param res Response,
+   * @param next NextFunction,
    */
   public async validateSameEmailDoesntExist(
     req: Request,
@@ -40,6 +46,9 @@ class UsersMiddleware {
 
   /**
    * validateSameEmailBelongsToSameUser
+   * @param req Request,
+   * @param res Response,
+   * @param next NextFunction,
    */
   public async validateSameEmailBelongsToSameUser(
     req: Request,
@@ -55,7 +64,12 @@ class UsersMiddleware {
   }
 
   /**
-   * validatePatchEmail
+   * Since PATCH will update only some fields in the target resource,
+   * if email is one of the parameters that needs to be updated, its existance
+   * needs to be validated
+   * @param req Request,
+   * @param res Response,
+   * @param next NextFunction,
    */
   public validatePatchEmail = async (
     req: Request,
@@ -72,6 +86,9 @@ class UsersMiddleware {
 
   /**
    * validateUserExists
+   * @param req Request,
+   * @param res Response,
+   * @param next NextFunction,
    */
   public async validateUserExists(
     req: Request,
@@ -90,8 +107,11 @@ class UsersMiddleware {
 
   /**
    * exractUserId
+   * @param req Request,
+   * @param res Response,
+   * @param next NextFunction,
    */
-  public async exractUserId(req: Request, res: Response, next: NextFunction) {
+  public async extractUserId(req: Request, res: Response, next: NextFunction) {
     req.body.id = req.params.userId;
     next();
   }
