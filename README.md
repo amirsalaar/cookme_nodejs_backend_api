@@ -11,9 +11,20 @@
 
 ## Database Setups
 
+In version 2, we have switched the databse to MongoDB and have utilized containerization around our database instance. The MongoDB server is running on a Docker container so as to give the corss-platform flexibility to run the app. For that purpose, `docker-compose.yml` file cintains the information of the container running our MongoDB server.
+
+### Steps for running and stopping the database container
+
+- To start the database container:
+
 ```bash
-createdb -U postgres cookme_dev
-createdb -U postgres cookme_test
+docker-compose up -d
+```
+
+- To stop the database container:
+
+```bash
+docker-compose down
 ```
 
 ### Migrations
