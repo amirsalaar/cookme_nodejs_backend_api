@@ -56,7 +56,7 @@ class UsersMiddleware {
     next: NextFunction,
   ) {
     const user = await usersService.getUserByEmail(req.body.email);
-    if (user && user.id === req.params.id) {
+    if (user && user.id === req.params.userId) {
       return next();
     }
 
