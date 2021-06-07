@@ -1,3 +1,4 @@
+import "../dotenvConfig";
 import express from "express";
 import { Server } from "node:http";
 import swaggerUi from "swagger-ui-express";
