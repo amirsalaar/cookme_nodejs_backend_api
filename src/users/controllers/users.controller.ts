@@ -18,10 +18,8 @@ class UsersController {
   }
 
   async createUser(req: Request, res: Response) {
-    let { password } = req.body;
-
     const salt = await bcrypt.genSalt(SALT_ROUNDS);
-    password = await bcrypt.hash(password, salt);
+    req.body.password = await bcrypt.hash(req.body.password, salt);
 
     const userId = await usersService.create(req.body);
     res.status(201).send({ id: userId });
