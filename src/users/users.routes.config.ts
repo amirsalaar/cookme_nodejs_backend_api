@@ -1,5 +1,7 @@
-import { CommonRoutesConfig } from "../common/common.routes.config";
 import { Application } from "express";
+import { body } from "express-validator";
+import bodyValidationMiddleware from "src/common/middleware/body.validation.middleware";
+import { CommonRoutesConfig } from "../common/common.routes.config";
 import usersController from "./controllers/users.controller";
 import usersMiddleware from "./middleware/users.middleware";
 
@@ -13,7 +15,11 @@ export class UsersRoutes extends CommonRoutesConfig {
       .route(this.getAbsolutePath("/users"))
       .get(usersController.listUsers)
       .post(
-        usersMiddleware.validateRequiredUserBodyFields,
+        body("email").isEmail(),
+        body("password")
+          .isLength({ min: 6 })
+          .withMessage("Must include password more than six characters"),
+        bodyValidationMiddleware.verifyBodyFieldsErrors,
         usersMiddleware.validateSameEmailDoesntExist,
         usersController.createUser,
       );
@@ -30,13 +36,28 @@ export class UsersRoutes extends CommonRoutesConfig {
       .delete(usersController.removeUser);
 
     this.app.put(this.getAbsolutePath("/users/:userId"), [
-      usersMiddleware.validateRequiredUserBodyFields,
+      body("email").isEmail(),
+      body("password")
+        .isLength({ min: 6 })
+        .withMessage("Must include password more than six characters"),
+      body("firstName").isString(),
+      body("lastName").isString(),
+      body("permissionFlags").isInt(),
+      bodyValidationMiddleware.verifyBodyFieldsErrors,
       usersMiddleware.validateSameEmailBelongsToSameUser,
       usersController.put,
     ]);
 
     this.app.patch(this.getAbsolutePath("/users/:userId"), [
-      usersMiddleware.validatePatchEmail,
+      body("email").isEmail().optional(),
+      body("password")
+        .isLength({ min: 6 })
+        .withMessage("Must include password more than six characters")
+        .optional(),
+      body("firstName").isString().optional(),
+      body("lastName").isString().optional(),
+      body("permissionFlags").isInt().optional(),
+      bodyValidationMiddleware.verifyBodyFieldsErrors,
       usersController.patch,
     ]);
 

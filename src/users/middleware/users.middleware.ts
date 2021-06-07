@@ -6,26 +6,6 @@ const log: debug.IDebugger = debug("app:users-middleware");
 
 class UsersMiddleware {
   /**
-   * validateREquiredUserBodyFields
-   * @param req Request,
-   * @param res Response,
-   * @param next NextFunction,
-   */
-  public async validateRequiredUserBodyFields(
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) {
-    if (req.body && !req.body.email && !req.body.password) {
-      res.status(400).send({
-        error: "Missing required fields for email and password",
-      });
-    } else {
-      next();
-    }
-  }
-
-  /**
    * validateSameEmailDoesntExist
    * @param req Request,
    * @param res Response,
