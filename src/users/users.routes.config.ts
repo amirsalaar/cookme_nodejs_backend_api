@@ -4,6 +4,9 @@ import bodyValidationMiddleware from "../common/middleware/body.validation.middl
 import { CommonRoutesConfig } from "../common/common.routes.config";
 import usersController from "./controllers/users.controller";
 import usersMiddleware from "./middleware/users.middleware";
+import jwtMiddleware from "../auth/middleware/jwt.middleware";
+import permissionMiddleware from "../common/middleware/common.permission.middleware";
+import { PermissionFlag } from "../common/middleware/common.permissionflag.enum";
 
 export class UsersRoutes extends CommonRoutesConfig {
   constructor(app: Application, nameSpace: string | undefined = "/api/v2") {
@@ -13,7 +16,13 @@ export class UsersRoutes extends CommonRoutesConfig {
   public configureRoutes(): Application {
     this.app
       .route(this.getAbsolutePath("/users"))
-      .get(usersController.listUsers)
+      .get(
+        jwtMiddleware.validJWTNeeded,
+        permissionMiddleware.permissionFlagRequired(
+          PermissionFlag.ADMIN_PERMISSION,
+        ),
+        usersController.listUsers,
+      )
       .post(
         body("email").isEmail(),
         body("password")
@@ -28,7 +37,11 @@ export class UsersRoutes extends CommonRoutesConfig {
 
     this.app
       .route(this.getAbsolutePath("/users/:userId"))
-      .all(usersMiddleware.validateUserExists);
+      .all(
+        usersMiddleware.validateUserExists,
+        jwtMiddleware.validJWTNeeded,
+        permissionMiddleware.onlySameUserOrAdminCanDoThisAction,
+      );
 
     this.app
       .route(this.getAbsolutePath("/users/:userId"))
