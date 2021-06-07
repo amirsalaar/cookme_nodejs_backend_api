@@ -1,11 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
-import { Jwt } from "../../common/types/jwt";
+import { JwtPayload } from "../../common/types/jwt";
 import usersService from "../../users/services/users.service";
 
-// @ts-expect-error JWT_SECRET is an environment variable
-const JWT_SECRET: string = process.env.JWT_SECRET;
+const JWT_SECRET: string = process.env.JWT_SECRET!;
 
 class JwtMiddleware {
   public verifyRefreshBodyField(
@@ -36,16 +35,16 @@ class JwtMiddleware {
     next: NextFunction,
   ) {
     const user: any = await usersService.getUserByEmailWithPassword(
-      res.locals.jwt.email,
+      res.locals.jwtPayload.email,
     );
 
     const salt = crypto.createSecretKey(
-      Buffer.from(res.locals.jwt.refreshKey.data),
+      Buffer.from(res.locals.jwtPayload.refreshKey.data),
     );
 
     const hash = crypto
       .createHmac("sha512", salt)
-      .update(res.locals.jwt.userId + JWT_SECRET)
+      .update(res.locals.jwtPayload.userId + JWT_SECRET)
       .digest("base64");
 
     if (hash === req.body.refreshToken) {
@@ -68,10 +67,14 @@ class JwtMiddleware {
           return res.send(400).send();
         }
 
-        res.locals.jwt = jwt.verify(authorization[1], JWT_SECRET) as Jwt;
+        res.locals.jwtPayload = jwt.verify(
+          authorization[1],
+          JWT_SECRET,
+        ) as JwtPayload;
+
         next();
       } catch (error) {
-        return res.status(403).send();
+        return res.status(403).send({ errors: error.message });
       }
     } else {
       return res.status(401).send();

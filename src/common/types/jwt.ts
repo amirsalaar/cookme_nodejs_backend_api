@@ -1,4 +1,4 @@
-export type Jwt = {
+export type JwtPayload = {
   refreshKey: string;
   userId: string;
   permissionFlags: string;
