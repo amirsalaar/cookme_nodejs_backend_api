@@ -8,6 +8,7 @@ import swaggerDoc from "./configs/swagger.json";
 import { logger } from "./utils";
 import { CommonRoutesConfig } from "./common/common.routes.config";
 import { UsersRoutes } from "./users/users.routes.config";
+import { AuthRoutes } from "./auth/auth.routes.config";
 
 const app = express();
 const debugLog: debug.IDebugger = debug("app");
@@ -30,7 +31,7 @@ app.use((_req, res, next) => {
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
-routes.push(new UsersRoutes(app));
+routes.push(new UsersRoutes(app), new AuthRoutes(app));
 
 export const appRunner = (): Server =>
   app.listen(process.env.PORT, () => {
