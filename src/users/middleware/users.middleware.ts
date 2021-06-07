@@ -93,6 +93,27 @@ class UsersMiddleware {
     req.body.id = req.params.userId;
     next();
   }
+
+  /**
+   * This is to validate if user can change permission flag on update request
+   * userCantChangePermission
+   */
+  public async userCantChangePermission(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    if (
+      "permissionFlags" in req.body &&
+      req.body.permissionFlags !== res.locals.user.permissionFlags
+    ) {
+      return res
+        .status(400)
+        .send({ errors: ["User cannot change permission flags"] });
+    }
+
+    return next();
+  }
 }
 
 export default new UsersMiddleware();

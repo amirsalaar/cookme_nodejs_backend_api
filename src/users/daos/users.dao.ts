@@ -2,6 +2,7 @@ import shortid from "shortid";
 import debug from "debug";
 import { CreateUserDto, PatchUserDto, PutUserDto } from "../dtos/";
 import mongooseService from "../../common/services/mongoose.service";
+import { PermissionFlag } from "../../common/middleware/common.permissionflag.enum";
 
 const log: debug.IDebugger = debug("app:in-memory-dao");
 
@@ -21,7 +22,7 @@ class UsersDao {
     password: { type: String, select: false },
     firstName: String,
     lastName: String,
-    permissionFlags: Number,
+    permissionFlag: Number,
   });
 
   User = mongooseService.getMongoose.model("Users", this.userSchema);
@@ -40,7 +41,7 @@ class UsersDao {
     const user = new this.User({
       _id: userId,
       ...userFields,
-      permissionFlags: 1,
+      permissionFlag: PermissionFlag.BASE_PERMISSION,
     });
     await user.save();
     return userId;
@@ -108,7 +109,7 @@ class UsersDao {
    */
   public async getUserByEmailWithPassword(email: string) {
     return this.User.findOne({ email })
-      .select("_id email permissionFlags +password")
+      .select("_id email permissionFlag +password")
       .exec();
   }
 }
