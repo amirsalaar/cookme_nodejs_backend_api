@@ -58,6 +58,7 @@ export class UsersRoutes extends CommonRoutesConfig {
       body("permissionFlags").isInt(),
       bodyValidationMiddleware.verifyBodyFieldsErrors,
       usersMiddleware.validateSameEmailBelongsToSameUser,
+      usersMiddleware.userCantChangePermission,
       usersController.put,
     ]);
 
@@ -71,6 +72,7 @@ export class UsersRoutes extends CommonRoutesConfig {
       body("lastName").isString().optional(),
       body("permissionFlags").isInt().optional(),
       bodyValidationMiddleware.verifyBodyFieldsErrors,
+      usersMiddleware.userCantChangePermission,
       usersController.patch,
     ]);
 
