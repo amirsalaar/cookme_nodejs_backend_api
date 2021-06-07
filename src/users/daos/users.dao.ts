@@ -101,6 +101,16 @@ class UsersDao {
   public async removeUserById(userId: string) {
     return this.User.deleteOne({ _id: userId }).exec();
   }
+
+  /**
+   * getUserByEmailWithPassword
+   * @param {string} email
+   */
+  public async getUserByEmailWithPassword(email: string) {
+    return this.User.findOne({ email })
+      .select("_id email permissionFlags +password")
+      .exec();
+  }
 }
 
 export default new UsersDao(); // singleton class

@@ -1,6 +1,6 @@
 import { Application } from "express";
 import { body } from "express-validator";
-import bodyValidationMiddleware from "src/common/middleware/body.validation.middleware";
+import bodyValidationMiddleware from "../common/middleware/body.validation.middleware";
 import { CommonRoutesConfig } from "../common/common.routes.config";
 import usersController from "./controllers/users.controller";
 import usersMiddleware from "./middleware/users.middleware";
