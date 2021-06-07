@@ -11,9 +11,10 @@
     "lint:fix": "npm run lint --fix",
     "format": "prettier --write --loglevel silent './**/*.{json,js}'",
     "test": "NODE_ENV=test jest",
+    "test-debug": "export DEBUG=* && npm test",
     "test:watch": "NODE_ENV=test jest --watch",
     "test:coverage": "NODE_ENV=test jest --coverage",
-    "debug": "export DEBUG=app && npm run dev",
+    "debug": "export DEBUG=* && npm run dev",
     "start": "cross-env NODE_ENV=development node dist/src/index.js"
   },
   "husky": {
