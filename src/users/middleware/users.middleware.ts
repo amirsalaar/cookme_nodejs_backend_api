@@ -35,8 +35,7 @@ class UsersMiddleware {
     res: Response,
     next: NextFunction,
   ) {
-    const user = await usersService.getUserByEmail(req.body.email);
-    if (user && user.id === req.params.userId) {
+    if (res.locals.user.id === req.params.userId) {
       next();
     } else {
       res.status(400).send({ error: "Invalid Email" });
@@ -76,11 +75,14 @@ class UsersMiddleware {
     next: NextFunction,
   ) {
     const user = await usersService.getById(req.params.userId);
-    if (!user) {
-      res.status(404).send({ error: `User id ${req.params.userId} not found` });
-    } else {
-      next();
+    if (user) {
+      res.locals.user = user;
+      return next();
     }
+
+    return res
+      .status(404)
+      .send({ error: `User id ${req.params.userId} not found` });
   }
 
   /**
