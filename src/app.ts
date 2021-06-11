@@ -7,9 +7,9 @@ import cors from "cors";
 
 import swaggerDoc from "./configs/swagger.json";
 import { logger } from "./utils";
-import { AuthRoutes } from "./auth/auth.routes.config";
 import mongooseService from "./common/services/mongoose.service";
 import User from "./user";
+import Auth from "./auth";
 
 const debugLog: debug.IDebugger = debug("application");
 const application = express();
@@ -34,6 +34,7 @@ function main(): Server {
   });
 
   application.use("/users", User(dbService));
+  application.use("/auth", Auth(dbService));
 
   return application.listen(process.env.PORT, () => {
     console.log(`Backend listening on port ${process.env.PORT}`);
