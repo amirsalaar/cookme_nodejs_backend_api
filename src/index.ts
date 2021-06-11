@@ -1,3 +1,3 @@
-import { appRunner } from "./app";
+import application from "./app";
 
-appRunner();
+application();
