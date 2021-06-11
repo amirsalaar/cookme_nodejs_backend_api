@@ -7,13 +7,14 @@ import jwtMiddleware from "src/auth/middleware/jwt.middleware";
 import commonPermissionMiddleware from "src/common/middleware/common.permission.middleware";
 import { PermissionFlag } from "src/common/middleware/common.permissionflag.enum";
 import bodyValidationMiddleware from "src/common/middleware/body.validation.middleware";
-import usersMiddleware from "./middleware/users.middleware";
+import Middleware, { UsersMiddleware } from "./middleware";
 
 const log: debug.IDebugger = debug("app:users-controller");
 const SALT_ROUNDS = 10;
 
 const usersController = (usersService: UsersService): Router => {
   const router = Router();
+  const usersMiddleware: UsersMiddleware = Middleware(usersService);
 
   const getUserById = async (req: Request, res: Response) => {
     const user = await usersService.getById(req.body.id);
