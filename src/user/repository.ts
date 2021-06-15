@@ -2,19 +2,7 @@ import shortid from "shortid";
 import { CreateUserDto, PatchUserDto, PutUserDto } from "./dtos";
 import mongooseService from "../common/services/mongoose.service";
 import { PermissionFlag } from "../common/middleware/common.permissionflag.enum";
-
-export interface UserRepository {
-  addUser: (userFields: CreateUserDto) => Promise<string>;
-  getUserById: (userId: string) => Promise<string>;
-  getUsers: (limit: number, page: number) => Promise<any>;
-  updateUserById: (
-    userId: string,
-    userFields: PatchUserDto | PutUserDto,
-  ) => Promise<string>;
-  removeUserById: (userId: string) => Promise<any>;
-  getUserByEmail: (email: string) => Promise<string>;
-  getUserByEmailWithPassword: (email: string) => Promise<string>;
-}
+import { UserRepository } from "./interface";
 
 const repository = (dbService: typeof mongooseService): UserRepository => {
   const { Schema } = dbService.getMongoose;

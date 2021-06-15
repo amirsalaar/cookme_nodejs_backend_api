@@ -1,14 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { UsersService } from "../../user/service";
-
-export interface AuthMiddleware {
-  verifyUserPassword: (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) => Promise<void>;
-}
+import { AuthMiddleware } from "../interface";
 
 const authMiddleware = (usersService: UsersService): AuthMiddleware => {
   return {

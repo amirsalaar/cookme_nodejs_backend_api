@@ -1,41 +1,9 @@
 import { UsersService } from "./service";
 import debug from "debug";
 import { Request, Response, NextFunction } from "express";
+import { UsersMiddleware } from "./interface";
 
 const log: debug.IDebugger = debug("app:users-middleware");
-
-export interface UsersMiddleware {
-  validateSameEmailDoesntExist: (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) => Promise<void>;
-  validateSameEmailBelongsToSameUser: (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) => void;
-  validatePatchEmail: (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) => Promise<any>;
-  validateUserExists: (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) => Promise<void>;
-  extractUserId: (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) => Promise<void>;
-  userCantChangePermission: (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) => Promise<void>;
-}
 
 const usersMiddleware = (usersService: UsersService): UsersMiddleware => {
   const validateSameEmailBelongsToSameUser = (

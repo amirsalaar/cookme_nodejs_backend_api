@@ -3,22 +3,9 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import { JwtPayload } from "../../common/types/jwt";
 import { UsersService } from "../../user/service";
+import { JwtMiddleware } from "../interface";
 
 const JWT_SECRET: string = process.env.JWT_SECRET!;
-
-export interface JwtMiddleware {
-  verifyRefreshBodyField: (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) => void;
-  validRefreshNeeded: (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) => Promise<void>;
-  validJWTNeeded: (req: Request, res: Response, next: NextFunction) => void;
-}
 
 const jwtMiddleware = (usersService: UsersService): JwtMiddleware => {
   return {
