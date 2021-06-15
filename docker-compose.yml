@@ -1,0 +1,15 @@
+version: "3"
+services:
+  mongo:
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+  node:
+    restart: always
+    build: .
+    ports:
+      - 3001:3001
+    volumes:
+      - ./:/code

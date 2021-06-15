@@ -12,6 +12,9 @@ const loggerOptions: expressWinston.LoggerOptions = {
 
 if (!process.env.DEBUG) {
   loggerOptions.meta = false;
+  if (typeof global.it === "function") {
+    loggerOptions.level = "http";
+  }
 }
 
 export const logger = expressWinston.logger(loggerOptions);

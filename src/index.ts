@@ -1,4 +1,3 @@
-import "../dotenvConfig";
-import app from "./app";
+import application from "./app";
 
-app.run();
+application();
