@@ -22,7 +22,7 @@
     "resolveJsonModule": true,
     "baseUrl": "./src"
   },
-  "exclude": ["node_modules", "./**/*__tests__"],
+  "exclude": ["node_modules", "./src/**/*.tests.ts"],
   "include": [
     "./src/**/*.tsx",
     "./src/**/*.ts",
