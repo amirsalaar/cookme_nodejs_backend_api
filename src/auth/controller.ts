@@ -6,7 +6,7 @@ import debug from "debug";
 import bodyValidationMiddleware from "../common/middleware/body.validation.middleware";
 import AuthMiddleware from "./middleware/auth.middleware";
 import JwtMiddleware from "./middleware/jwt.middleware";
-import { UsersService } from "src/user/service";
+import { UsersService } from "../user/service";
 
 const log: debug.IDebugger = debug("app:auth-controller");
 
