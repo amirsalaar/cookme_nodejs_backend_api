@@ -42,10 +42,10 @@ const repository = (dbService: typeof mongooseService): UserRepository => {
     },
 
     /**
-     * getUserById
+     * findUserById
      * @param {string} userId
      */
-    async getUserById(userId: string) {
+    async findUserById(userId: string) {
       return User.findOne({ _id: userId }).populate("User").exec();
     },
 

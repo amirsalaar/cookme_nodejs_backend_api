@@ -37,7 +37,7 @@ export interface UsersMiddleware {
 
 export interface UserRepository {
   addUser: (userFields: CreateUserDto) => Promise<string>;
-  getUserById: (userId: string) => Promise<string>;
+  findUserById: (userId: string) => Promise<string>;
   getUsers: (limit: number, page: number) => Promise<any>;
   updateUserById: (
     userId: string,

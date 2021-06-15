@@ -26,7 +26,7 @@ const usersService = (usersRepository: UserRepository): UsersService => {
     },
 
     async getById(id: string) {
-      return usersRepository.getUserById(id);
+      return usersRepository.findUserById(id);
     },
 
     async putById(id: string, resource: PutUserDto) {
