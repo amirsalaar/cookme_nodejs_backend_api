@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import { JwtPayload } from "../../common/types/jwt";
-import usersService, { UsersService } from "../../user/service";
+import { UsersService } from "../../user/service";
 
 const JWT_SECRET: string = process.env.JWT_SECRET!;
 

@@ -1,5 +1,4 @@
 import shortid from "shortid";
-import debug from "debug";
 import { CreateUserDto, PatchUserDto, PutUserDto } from "./dtos";
 import mongooseService from "../common/services/mongoose.service";
 import { PermissionFlag } from "../common/middleware/common.permissionflag.enum";
