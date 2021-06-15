@@ -3,10 +3,10 @@ import debug from "debug";
 import { body } from "express-validator";
 import bcrypt from "bcrypt";
 import { UsersService } from "./service";
-import JwtMiddleware from "src/auth/middleware/jwt.middleware";
-import commonPermissionMiddleware from "src/common/middleware/common.permission.middleware";
-import { PermissionFlag } from "src/common/middleware/common.permissionflag.enum";
-import bodyValidationMiddleware from "src/common/middleware/body.validation.middleware";
+import JwtMiddleware from "../auth/middleware/jwt.middleware";
+import commonPermissionMiddleware from "../common/middleware/common.permission.middleware";
+import { PermissionFlag } from "../common/middleware/common.permissionflag.enum";
+import bodyValidationMiddleware from "../common/middleware/body.validation.middleware";
 import UserMiddleware from "./middleware";
 
 const log: debug.IDebugger = debug("app:users-controller");

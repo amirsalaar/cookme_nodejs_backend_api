@@ -4,23 +4,21 @@ import { CreateUserDto, PatchUserDto, PutUserDto } from "./dtos";
 import mongooseService from "../common/services/mongoose.service";
 import { PermissionFlag } from "../common/middleware/common.permissionflag.enum";
 
-const log: debug.IDebugger = debug("app:users-repository");
-
 export interface UserRepository {
   addUser: (userFields: CreateUserDto) => Promise<string>;
   getUserById: (userId: string) => Promise<string>;
-  getUsers: (limit: number, page: number) => Promise<string>;
+  getUsers: (limit: number, page: number) => Promise<any>;
   updateUserById: (
     userId: string,
     userFields: PatchUserDto | PutUserDto,
   ) => Promise<string>;
-  removeUserById: (userId: string) => Promise<string>;
+  removeUserById: (userId: string) => Promise<any>;
   getUserByEmail: (email: string) => Promise<string>;
   getUserByEmailWithPassword: (email: string) => Promise<string>;
 }
 
 const repository = (dbService: typeof mongooseService): UserRepository => {
-  const Schema = dbService.getMongoose.Schema;
+  const { Schema } = dbService.getMongoose;
   /**
    * select: false in the @field password will hide this
    * field when returning a user or list of the users
@@ -35,7 +33,9 @@ const repository = (dbService: typeof mongooseService): UserRepository => {
     permissionFlag: Number,
   });
 
-  const User = mongooseService.getMongoose.model("Users", userSchema);
+  const User =
+    dbService.getMongoose.models.Users ||
+    dbService.getMongoose.model("Users", userSchema);
 
   return {
     /**
