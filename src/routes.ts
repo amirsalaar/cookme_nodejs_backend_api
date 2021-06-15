@@ -1,5 +1,5 @@
 import { Router } from "express";
-import mongooseService from "src/common/services/mongoose.service";
+import mongooseService from "./common/services/mongoose.service";
 import Auth from "./auth";
 import User from "./user";
 
