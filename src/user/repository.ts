@@ -11,14 +11,17 @@ const repository = (dbService: typeof mongooseService): UserRepository => {
    * field when returning a user or list of the users
    * { id: false } deactivates id getter offered by mongoose
    */
-  const userSchema = new Schema({
-    _id: String,
-    email: String,
-    password: { type: String, select: false },
-    firstName: String,
-    lastName: String,
-    permissionFlag: Number,
-  });
+  const userSchema = new Schema(
+    {
+      _id: String,
+      email: String,
+      password: { type: String, select: false },
+      firstName: String,
+      lastName: String,
+      permissionFlag: Number,
+    },
+    { timestamps: true },
+  );
 
   const User =
     dbService.getMongoose.models.Users ||
