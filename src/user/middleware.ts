@@ -1,7 +1,6 @@
-import { UsersService } from "./service";
 import debug from "debug";
 import { Request, Response, NextFunction } from "express";
-import { UsersMiddleware } from "./interface";
+import { UsersMiddleware, UsersService } from "./interface";
 
 const log: debug.IDebugger = debug("app:users-middleware");
 

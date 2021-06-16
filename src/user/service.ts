@@ -1,11 +1,5 @@
-import { CRUD } from "../common/interfaces/crud.interface";
 import { CreateUserDto, PatchUserDto, PutUserDto } from "./dtos";
-import { UserRepository } from "./interface";
-
-export interface UsersService extends CRUD {
-  getUserByEmail: (email: string) => Promise<any>;
-  getUserByEmailWithPassword: (email: string) => Promise<any>;
-}
+import { UserRepository, UsersService } from "./interface";
 
 const usersService = (usersRepository: UserRepository): UsersService => {
   return {

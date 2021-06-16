@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { CRUD } from "src/common/interfaces/crud.interface";
 import { CreateUserDto, PatchUserDto, PutUserDto } from "../dtos";
 export * from "./user.types";
 
@@ -46,4 +47,9 @@ export interface UserRepository {
   removeUserById: (userId: string) => Promise<any>;
   getUserByEmail: (email: string) => Promise<string>;
   getUserByEmailWithPassword: (email: string) => Promise<string>;
+}
+
+export interface UsersService extends CRUD {
+  getUserByEmail: (email: string) => Promise<any>;
+  getUserByEmailWithPassword: (email: string) => Promise<any>;
 }
